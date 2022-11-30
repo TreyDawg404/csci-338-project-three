@@ -23,24 +23,31 @@ public class GraphToolBox {
         return null;
     }
 
+    /**
+     * @param inputGraph - a graph generated from Graph.java
+     * @param verts - a list of vertices seperated by commas
+     * @return boolean
+     * @author Trey Grossman
+     */
     public static boolean isVC(Graph inputGraph, int[] verts){
-        int vertFlag = 0;
+        int vertFlag = 0; // flag used to track pass/fail of function
+        // iterate through each vertex and its children
         for (int i = 0; i < inputGraph.getGraph().length; i++){
-            vertFlag = 0;
+            vertFlag = 0; // reset flag
             for (int j = 0; j < inputGraph.getGraph()[i].length; j++){
+                // iterate through each vertex listed in test VC "verts"
                 for (int k : verts){
-                    if (k == inputGraph.getGraph()[i][j] || k == i){
-                        vertFlag = 1;
-                    }
+                    // switch flag if either the parent or child vertex matches the current test vertex
+                    if (k == inputGraph.getGraph()[i][j] || k == i){vertFlag = 1;}
                 }
-                System.out.println(inputGraph.getGraph()[i][j]);
             }
+            // if flag was not changed per parent vertex cycle, return false
             if (vertFlag == 0){
-                System.out.println(false);
+                System.out.println(false); // test print
                 return false;
             }
         }
-        System.out.println(true);
+        System.out.println(true); // test print
         return true;
     }
 }
