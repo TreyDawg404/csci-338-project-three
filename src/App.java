@@ -1,6 +1,6 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        
+
         /*
          * Manual vertex cover verifier
          * Provide file name of graph and list of vertices seperated by commas
