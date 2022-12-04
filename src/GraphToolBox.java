@@ -43,11 +43,25 @@ public class GraphToolBox {
             }
             // if flag was not changed per parent vertex cycle, return false
             if (vertFlag == 0){
-                System.out.println(false); // test print
+                System.out.println("manual VC test: "+false); // test print
                 return false;
             }
         }
-        System.out.println(true); // test print
+        System.out.println("manual VC test: "+true); // test print
+        return true;
+    }
+    public static boolean isIS(Graph inputGraph, int[] verts){
+        for (int i : verts){
+            for (int j : inputGraph.getGraph()[i]){
+                for (int k : verts){
+                    if (j == k){
+                        System.out.println("manual IS test: "+false); // test print
+                        return false;
+                    }
+                }
+            }
+        }
+        System.out.println("manual IS test: "+true); // test print
         return true;
     }
 }
