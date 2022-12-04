@@ -29,8 +29,10 @@ public class GraphToolBox {
 
         int vertexCount = 0; //count of # of vertices in a set. if it's the highest, keep. 
         int independentSet[]; //will store an indeterminate number of vertices in the IS.
+        int numVerts = inputGraph.getGraph().length; // number of vertices? 
 
 
+        System.out.println(numVerts + " is the number of vertices in the graph");
 
         return null;
     }
