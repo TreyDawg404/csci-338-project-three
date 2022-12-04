@@ -13,8 +13,25 @@ public class GraphToolBox {
         return null;
     }
     
-    // return an array containing the vertex numbers of an optimal IS.
+    // return an array containing the vertex numbers of an optimal IS.     
     public static int[] optimalIS(Graph inputGraph) {
+
+        /*
+         * Plan is to extract data from the graph, that data being:
+         * - The number of vertices (should be length of array?)
+         * - Each vertice's "neigbors" i.e. adjacent vertices
+         * - Randomly choose any 1 vertex, mark it.
+         * - Randomly select a vertex not in it's list of neighbors, mark
+         * - Repeat until ?
+         * - Record number of vertices.
+         * - If highest, keep
+         */
+
+        int vertexCount = 0; //count of # of vertices in a set. if it's the highest, keep. 
+        int independentSet[]; //will store an indeterminate number of vertices in the IS.
+
+
+
         return null;
     }
     
