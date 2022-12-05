@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,35 +18,46 @@ public class GraphToolBox {
 
         int n = inputGraph.getGraph().length;
         int [] allVertex = new int [inputGraph.getGraph().length];
-        int[][] allVC = new int[(int) Math.pow(2,n)][];
-        int[] VertexCover = new int[999999999];
 
         //Creating an array with all teh vertices from graph
         for(int i = 0; i < inputGraph.getGraph().length; i++){
             allVertex[i] = i;
         }
 
+
+        int [] bestVertexCover = new int[inputGraph.getGraph().length];
         for (int i = 0; i < (1<<n); i++){
+            List<Integer> VertexCover = new ArrayList<>();
             int m = 1;
             for (int j = 0; j < n-1; j++){
                 if((i&m) > 0){
-                    //System.out.print(allVertex[j]);
-                    allVC[i][j] = allVertex[j];
+                    VertexCover.add(allVertex[j]);
+                    //System.out.println(VertexCover);
                 }
                 m = m << 1;
             }
-            if(isVC(inputGraph,allVC[i])){
-                if(VertexCover.length > allVC[i].length){
-                    VertexCover = allVC[i];
+
+            int [] vertexCoverArray = new int[VertexCover.size()];
+            for(int r = 0; r < VertexCover.size(); r++){
+                vertexCoverArray[r] = VertexCover.get(r);
+                //System.out.print(vertexCoverArray[r]);
+            }
+            if(isVC(inputGraph,vertexCoverArray)){
+                if(bestVertexCover.length == 0){
+                    bestVertexCover = vertexCoverArray;
+                }
+                if(vertexCoverArray.length < bestVertexCover.length){
+                    bestVertexCover = vertexCoverArray;
                 }
             }
-            System.out.println(Arrays.toString(allVC[i]));
+
+
         }
         //Test if the set is a vertex cover
         //If it is smaller, replace current "VC" array.
-        System.out.println(Arrays.toString(VertexCover));
-        System.out.println(VertexCover.length);
-        return VertexCover;
+        System.out.println(Arrays.toString(bestVertexCover));
+        System.out.println(bestVertexCover.length);
+        return bestVertexCover;
     }
 
 

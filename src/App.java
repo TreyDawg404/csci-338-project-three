@@ -18,7 +18,7 @@ public class App {
         int[] isTest = {0,3,4,6}; // vertex cover to test
         GraphToolBox.isIS(graph2, isTest);
         
-        Graph graph5 = new Graph("graph6.txt");
+        Graph graph5 = new Graph("graph5.txt");
 
 
 
