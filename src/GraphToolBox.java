@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  *
  * @author yaw
@@ -11,40 +13,37 @@ public class GraphToolBox {
      */
     public static int[] exactVC(Graph inputGraph) {
         //Generate Power Set
-        long pow_set_size =
-                (long)Math.pow(2, inputGraph.getGraph().length);
-        int counter, j;
 
+        int n = inputGraph.getGraph().length;
         int [] allVertex = new int [inputGraph.getGraph().length];
-        int[][] allVC = new int[(int)pow_set_size][inputGraph.getGraph().length/2];
-        int[] VertexCover = new int[0];
+        int[][] allVC = new int[(int) Math.pow(2,n)][];
+        int[] VertexCover = new int[999999999];
 
         //Creating an array with all teh vertices from graph
         for(int i = 0; i < inputGraph.getGraph().length; i++){
             allVertex[i] = i;
         }
 
-        for(counter = 0; counter <
-                pow_set_size; counter++)
-        {
-            int k = 0;
-            for(j = 0; j < inputGraph.getGraph().length; j++)
-            {
-                /* Check if jth bit in the
-                counter is set If set then
-                print jth element from set */
-                if((counter & (1 << j)) > 0) {
+        for (int i = 0; i < (1<<n); i++){
+            int m = 1;
+            for (int j = 0; j < n-1; j++){
+                if((i&m) > 0){
                     //System.out.print(allVertex[j]);
-                    allVC[counter][k] = allVertex[j];
+                    allVC[i][j] = allVertex[j];
+                }
+                m = m << 1;
+            }
+            if(isVC(inputGraph,allVC[i])){
+                if(VertexCover.length > allVC[i].length){
+                    VertexCover = allVC[i];
                 }
             }
-            if(isVC(inputGraph,allVC[counter])){
-                VertexCover = allVC[counter];
-            }
-            System.out.println(counter);
+            System.out.println(Arrays.toString(allVC[i]));
         }
         //Test if the set is a vertex cover
         //If it is smaller, replace current "VC" array.
+        System.out.println(Arrays.toString(VertexCover));
+        System.out.println(VertexCover.length);
         return VertexCover;
     }
 
