@@ -4,10 +4,51 @@
  */
 public class GraphToolBox {
     // return an array containing the vertex numbers of an optimal VC.
+    /**
+     * @param inputGraph - a graph generated from Graph.java
+     * @return array of Vertex Numbers
+     * @author Parnell
+     */
     public static int[] exactVC(Graph inputGraph) {
-        return null;
+        //Generate Power Set
+        long pow_set_size =
+                (long)Math.pow(2, inputGraph.getGraph().length);
+        int counter, j;
+
+        int [] allVertex = new int [inputGraph.getGraph().length];
+        int[][] allVC = new int[(int)pow_set_size][inputGraph.getGraph().length/2];
+        int[] VertexCover = new int[0];
+
+        //Creating an array with all teh vertices from graph
+        for(int i = 0; i < inputGraph.getGraph().length; i++){
+            allVertex[i] = i;
+        }
+
+        for(counter = 0; counter <
+                pow_set_size; counter++)
+        {
+            int k = 0;
+            for(j = 0; j < inputGraph.getGraph().length; j++)
+            {
+                /* Check if jth bit in the
+                counter is set If set then
+                print jth element from set */
+                if((counter & (1 << j)) > 0) {
+                    //System.out.print(allVertex[j]);
+                    allVC[counter][k] = allVertex[j];
+                }
+            }
+            if(isVC(inputGraph,allVC[counter])){
+                VertexCover = allVC[counter];
+            }
+            System.out.println(counter);
+        }
+        //Test if the set is a vertex cover
+        //If it is smaller, replace current "VC" array.
+        return VertexCover;
     }
-    
+
+
     // return (in polynomial time) an array containing the vertex numbers of a VC.
     public static int[] inexactVC(Graph inputGraph) {
         return null;

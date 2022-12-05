@@ -18,11 +18,11 @@ public class App {
         int[] isTest = {0,3,4,6}; // vertex cover to test
         GraphToolBox.isIS(graph2, isTest);
         
-        Graph graph3 = new Graph("graph1.txt");
+        Graph graph5 = new Graph("graph5.txt");
 
 
 
-        GraphToolBox.optimalIS(graph3);
+        GraphToolBox.exactVC(graph5);
 
     }
 }
