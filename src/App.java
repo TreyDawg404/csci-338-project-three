@@ -7,7 +7,7 @@ public class App {
          */
         
         Graph graph1 = new Graph("graph6.txt"); // graph
-        int[] vcTest = {1,4,5,7,9}; // vertex cover to test
+        int[] vcTest = {}; // vertex cover to test
         GraphToolBox.isVC(graph1, vcTest);
         /*
          * Manual independent set verifier
@@ -15,14 +15,8 @@ public class App {
          */
         
         Graph graph2 = new Graph("graph5.txt"); // graph
-        int[] isTest = {0,3,4,6}; // vertex cover to test
+        int[] isTest = {}; // vertex cover to test
         GraphToolBox.isIS(graph2, isTest);
-        
-        Graph graph5 = new Graph("graph5.txt");
-
-
-
-        GraphToolBox.exactVC(graph5);
 
     }
 }

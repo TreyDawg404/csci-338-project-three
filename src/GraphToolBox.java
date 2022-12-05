@@ -3,17 +3,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author yaw
+ * @author Yaw
  */
 public class GraphToolBox {
-    // return an array containing the vertex numbers of an optimal VC.
+    
+    
+    
     /**
+     * Return an array containing the vertex numbers of an optimal VC
      * @param inputGraph - a graph generated from Graph.java
      * @return array of Vertex Numbers
      * @author Parnell
      */
-    public static int[] exactVC(Graph inputGraph) {
+     public static int[] exactVC(Graph inputGraph) {
         //Generate Power Set
 
         int n = inputGraph.getGraph().length;
@@ -60,11 +62,20 @@ public class GraphToolBox {
         return bestVertexCover;
     }
 
-
-    // return (in polynomial time) an array containing the vertex numbers of a VC.
+    
+    
+    /**
+     * Return (in polynomial time) an array containing the vertex numbers of a VC
+     * @param inputGraph - a graph generated from Graph.java
+     * @return array of Vertex Numbers
+     * @author Grossman
+     */
     public static int[] inexactVC(Graph inputGraph) {
+        
         return null;
     }
+    
+    
     
     // return an array containing the vertex numbers of an optimal IS.     
     public static int[] optimalIS(Graph inputGraph) {
@@ -90,16 +101,21 @@ public class GraphToolBox {
         return null;
     }
     
+    
+    
     // return (in polynomial time) an array containing the vertex numbers of a IS.
     public static int[] inexactIS(Graph inputGraph) {
         return null;
     }
 
+    
+    
     /**
+     * Tests if a given set of vertices represents a vertex cover of a given graph
      * @param inputGraph - a graph generated from Graph.java
      * @param verts - a list of vertices seperated by commas
      * @return boolean
-     * @author Trey Grossman
+     * @author Grossman
      */
     public static boolean isVC(Graph inputGraph, int[] verts){
         int vertFlag = 0; // flag used to track pass/fail of function
@@ -122,6 +138,16 @@ public class GraphToolBox {
         System.out.println("manual VC test: "+true); // test print
         return true;
     }
+    
+    
+    
+    /**
+     * Tests if a given set of vertices represents an independent set of a given graph
+     * @param inputGraph - a graph generated from Graph.java
+     * @param verts - a list of vertices seperated by commas
+     * @return boolean
+     * @author Grossman
+     */
     public static boolean isIS(Graph inputGraph, int[] verts){
         for (int i : verts){
             for (int j : inputGraph.getGraph()[i]){
@@ -136,4 +162,7 @@ public class GraphToolBox {
         System.out.println("manual IS test: "+true); // test print
         return true;
     }
+
+
+
 }
