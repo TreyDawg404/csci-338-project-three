@@ -13,11 +13,11 @@ public class App {
          * Manual independent set verifier
          * Provide file name of graph and list of vertices seperated by commas
          */
-        
-        Graph graph2 = new Graph("graph5.txt"); // graph
+        Graph graph2 = new Graph("graph4.txt"); // graph
         int[] isTest = {}; // vertex cover to test
-        GraphToolBox.optimalIS(graph2);
         GraphToolBox.isIS(graph2, isTest);
+
+        GraphToolBox.inexactVC(graph2);
 
     }
 }

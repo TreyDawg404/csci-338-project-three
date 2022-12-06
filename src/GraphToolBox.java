@@ -70,6 +70,28 @@ public class GraphToolBox {
      * @author Grossman
      */
     public static int[] inexactVC(Graph inputGraph) {
+        List<Integer> goodVC = new ArrayList<>();
+        List<Integer> touched = new ArrayList<>();
+        for (int i = 0; i < inputGraph.getGraph().length; i++){
+            goodVC.add(i);
+            if (!touched.contains(i)){
+                touched.add(i);
+            }
+            for (int nei : inputGraph.getGraph()[i]){
+                if (!touched.contains(nei)){
+                    touched.add(nei);
+                }
+            }
+            int[] converter = new int[goodVC.size()];
+            for (int j = 0; j < goodVC.size(); j++){
+                converter[j] = goodVC.get(j);
+            }
+            if(isVC(inputGraph, converter)){
+                System.out.println("Found solution of length "+converter.length);
+                System.out.println("Unique nodes covered by this solution: "+touched.size());
+                return null;
+            }
+        }
         return null;
     }
     
