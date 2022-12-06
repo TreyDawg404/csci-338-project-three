@@ -70,54 +70,7 @@ public class GraphToolBox {
      * @author Grossman
      */
     public static int[] inexactVC(Graph inputGraph) {
-        int independentSet[] = new int[0];
-        int temp[][] = inputGraph.getGraph();
-        int remainingVertices[] = new int[temp.length];
-        int sizeof = temp.length;
-        for(int index = 0; index < sizeof; index++)
-        {
-            remainingVertices[index] = index;
-        }
-        while(sizeof > 0)
-        {
-            int minimumIndex = remainingVertices[0];
-            int minimumDegree[] = temp[remainingVertices[0]];
-            for(int i : remainingVertices)
-            {
-                if(temp[i].length < minimumDegree.length)
-                {
-                    minimumIndex = i;
-                    minimumDegree = temp[i];
-                }
-            }
-            int remainingTemp[] = new int[remainingVertices.length - (1 + minimumDegree.length)];
-            int independentTemp[] = new int[independentSet.length + 1];
-            int rTIndex = 0;
-            System.arraycopy(independentSet, 0, independentTemp, 0, independentSet.length);
-            independentTemp[independentTemp.length - 1] = minimumIndex;
-            for(int i : remainingVertices)
-            {
-                boolean contains = false;
-                for(int j : minimumDegree)
-                {
-                    if(i == j)
-                    {
-                        contains = true;
-                        break;
-                    }
-                }
-                boolean indexContain = (i == minimumIndex);
-                if(!contains && !indexContain)
-                {
-                    remainingTemp[rTIndex] = i;
-                    rTIndex += 1;
-                }
-            }
-            remainingVertices = new int[remainingTemp.length];
-            System.arraycopy(remainingTemp, 0, remainingVertices, 0, remainingTemp.length);
-        }
-        System.out.println("Test: " + independentSet.length);
-        return independentSet;
+        return null;
     }
     
     
@@ -206,7 +159,54 @@ public class GraphToolBox {
     
     // return (in polynomial time) an array containing the vertex numbers of a IS.
     public static int[] inexactIS(Graph inputGraph) {
-        return null;
+        int independentSet[] = new int[0];
+        int temp[][] = inputGraph.getGraph();
+        int remainingVertices[] = new int[temp.length];
+        int sizeof = temp.length;
+        for(int index = 0; index < sizeof; index++)
+        {
+            remainingVertices[index] = index;
+        }
+        while(sizeof > 0)
+        {
+            int minimumIndex = remainingVertices[0];
+            int minimumDegree[] = temp[remainingVertices[0]];
+            for(int i : remainingVertices)
+            {
+                if(temp[i].length < minimumDegree.length)
+                {
+                    minimumIndex = i;
+                    minimumDegree = temp[i];
+                }
+            }
+            int remainingTemp[] = new int[remainingVertices.length - (1 + minimumDegree.length)];
+            int independentTemp[] = new int[independentSet.length + 1];
+            int rTIndex = 0;
+            System.arraycopy(independentSet, 0, independentTemp, 0, independentSet.length);
+            independentTemp[independentTemp.length - 1] = minimumIndex;
+            for(int i : remainingVertices)
+            {
+                boolean contains = false;
+                for(int j : minimumDegree)
+                {
+                    if(i == j)
+                    {
+                        contains = true;
+                        break;
+                    }
+                }
+                boolean indexContain = (i == minimumIndex);
+                if(!contains && !indexContain)
+                {
+                    remainingTemp[rTIndex] = i;
+                    rTIndex += 1;
+                }
+            }
+            remainingVertices = new int[remainingTemp.length];
+            System.arraycopy(remainingTemp, 0, remainingVertices, 0, remainingTemp.length);
+        }
+        System.out.println("Test: " + independentSet.length);
+        return independentSet;
     }
 
     
