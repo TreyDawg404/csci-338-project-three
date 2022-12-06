@@ -79,26 +79,80 @@ public class GraphToolBox {
     
     // return an array containing the vertex numbers of an optimal IS.     
     public static int[] optimalIS(Graph inputGraph) {
+        //variable setup 
+        int numVerts = inputGraph.getGraph().length;
+        int vertexArr[] = new int[numVerts];
+        long powerSetSize = (long)Math.pow(2,numVerts);
+        int counter, j;
+        int bestIndependentSet[] = new int[inputGraph.getGraph().length];
 
+        //generate an array of all the vertices in the graph 
+        for(int x = 0; x<numVerts;x++)
+        {
+            vertexArr[x] = x;
+        }
+      
         /*
-         * Plan is to extract data from the graph, that data being:
-         * - The number of vertices (should be length of array?)
-         * - Each vertice's "neigbors" i.e. adjacent vertices
-         * - Randomly choose any 1 vertex, mark it.
-         * - Randomly select a vertex not in it's list of neighbors, mark
-         * - Repeat until ?
-         * - Record number of vertices.
-         * - If highest, keep
+         * this set of for loops generates a power set
+         * then puts each individual subset into an array
+         * and then tests that array to see if it's an IS. 
          */
+        for(counter = 0; counter < powerSetSize; counter++)
+        {
+            List<Integer> IndependentSet = new ArrayList<>();
+            //create 
+            for(j = 0;j < numVerts; j++)
+            {
+                if((counter & (1 << j)) > 0)
+                {
+                    //add element of subset to an arraylist
+                    /*
+                     *  !!!!!NOTICE!!!! THIS "IF" DELETES ALL DUPLICATES FROM THE POWER SET
+                     */
+                    if(!IndependentSet.contains(vertexArr[j]))
+                    {
+                        IndependentSet.add(vertexArr[j]);
+                    }
+                    //IndependentSet.add(vertexArr[j]);
+                    //print out element of subset 
+                    //System.out.print(vertexArr[j]);
+                }
+                
+                
+            }
+            //create and fill array to hold elements from arraylist
+            int ISArray[] = new int[IndependentSet.size()];
+            for(int x = 0; x < IndependentSet.size();x++)
+            {
+                //fill ISArray
+                ISArray[x] = IndependentSet.get(x);
+                //print out current subset in array
+                System.out.print(ISArray[x]);
+            }
 
-        int vertexCount = 0; //count of # of vertices in a set. if it's the highest, keep. 
-        int independentSet[]; //will store an indeterminate number of vertices in the IS.
-        int numVerts = inputGraph.getGraph().length; // number of vertices? 
+            
+            //now we test for the best Independent set 
+            //call isIS and send in the graph, and the subset Array
+            /* 
+            if(isIS(inputGraph, ISArray))
+            {
+                //if the BIS hasn't been set (length = 0)
+                if(bestIndependentSet.length == 0)
+                {
+                    bestIndependentSet = ISArray;
+                }
+                if(bestIndependentSet.length < ISArray.length)
+                {
+                    bestIndependentSet = ISArray;
+                }
+            }
+            */
+            System.out.println();
+        }
+        //System.out.println(Arrays.toString(bestIndependentSet));
+        //System.out.println(bestIndependentSet.length);
 
-
-        System.out.println(numVerts + " is the number of vertices in the graph");
-
-        return null;
+        return bestIndependentSet;
     }
     
     
