@@ -16,6 +16,7 @@ public class App {
         
         Graph graph2 = new Graph("graph5.txt"); // graph
         int[] isTest = {}; // vertex cover to test
+        GraphToolBox.optimalIS(graph2);
         GraphToolBox.isIS(graph2, isTest);
 
     }

@@ -17,11 +17,10 @@ public class GraphToolBox {
      */
      public static int[] exactVC(Graph inputGraph) {
         //Generate Power Set
-
         int n = inputGraph.getGraph().length;
         int [] allVertex = new int [inputGraph.getGraph().length];
 
-        //Creating an array with all teh vertices from graph
+        //Creating an array with all the vertices from graph
         for(int i = 0; i < inputGraph.getGraph().length; i++){
             allVertex[i] = i;
         }
@@ -40,11 +39,13 @@ public class GraphToolBox {
             }
 
             int [] vertexCoverArray = new int[VertexCover.size()];
+            //Converting VertexCover ArrayList into array form.
             for(int r = 0; r < VertexCover.size(); r++){
                 vertexCoverArray[r] = VertexCover.get(r);
-                //System.out.print(vertexCoverArray[r]);
             }
+            //Test if the set is a vertex cover
             if(isVC(inputGraph,vertexCoverArray)){
+                //If it is smaller, replace current "VC" array.
                 if(bestVertexCover.length == 0){
                     bestVertexCover = vertexCoverArray;
                 }
@@ -55,10 +56,8 @@ public class GraphToolBox {
 
 
         }
-        //Test if the set is a vertex cover
-        //If it is smaller, replace current "VC" array.
         System.out.println(Arrays.toString(bestVertexCover));
-        System.out.println(bestVertexCover.length);
+        System.out.println("Length of best Vertex Cover: " + bestVertexCover.length);
         return bestVertexCover;
     }
 
@@ -84,7 +83,7 @@ public class GraphToolBox {
         int vertexArr[] = new int[numVerts];
         long powerSetSize = (long)Math.pow(2,numVerts);
         int counter, j;
-        int bestIndependentSet[] = new int[inputGraph.getGraph().length];
+        int bestIndependentSet[] = new int[0];
 
         //generate an array of all the vertices in the graph 
         for(int x = 0; x<numVerts;x++)
@@ -127,13 +126,14 @@ public class GraphToolBox {
                 //fill ISArray
                 ISArray[x] = IndependentSet.get(x);
                 //print out current subset in array
-                System.out.print(ISArray[x]);
+                //System.out.print(ISArray[x]);
             }
 
             
             //now we test for the best Independent set 
             //call isIS and send in the graph, and the subset Array
-            /* 
+
+            //System.out.println(Arrays.toString(ISArray));
             if(isIS(inputGraph, ISArray))
             {
                 //if the BIS hasn't been set (length = 0)
@@ -143,14 +143,15 @@ public class GraphToolBox {
                 }
                 if(bestIndependentSet.length < ISArray.length)
                 {
+                    System.out.println(Arrays.toString(bestIndependentSet));
                     bestIndependentSet = ISArray;
                 }
             }
-            */
-            System.out.println();
+
+            //System.out.println();
         }
-        //System.out.println(Arrays.toString(bestIndependentSet));
-        //System.out.println(bestIndependentSet.length);
+        System.out.println(Arrays.toString(bestIndependentSet));
+        System.out.println("Best Independent Set Length: " + bestIndependentSet.length);
 
         return bestIndependentSet;
     }
