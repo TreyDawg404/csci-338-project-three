@@ -180,19 +180,25 @@ public class GraphToolBox {
     
     
     // return (in polynomial time) an array containing the vertex numbers of a IS.
-    public static int[] inexactIS(Graph inputGraph) {
+    public static int[] inexactIS(Graph inputGraph) F{
         int independentSet[] = new int[0];
         int temp[][] = inputGraph.getGraph();
         int remainingVertices[] = new int[temp.length];
+        int deleted[] = new int[temp.length];
+        int deletedSize = 0;
+        int deletedPlace = 0;
         int sizeof = temp.length;
         for(int index = 0; index < sizeof; index++)
         {
             remainingVertices[index] = index;
         }
-        while(sizeof > 0)
+        while(remainingVertices.length != 0)
         {
             int minimumIndex = remainingVertices[0];
             int minimumDegree[] = temp[remainingVertices[0]];
+            /*
+             * for loop below is to find vertice with lowest number of neighbors
+             */
             for(int i : remainingVertices)
             {
                 if(temp[i].length < minimumDegree.length)
@@ -201,15 +207,65 @@ public class GraphToolBox {
                     minimumDegree = temp[i];
                 }
             }
-            int remainingTemp[] = new int[remainingVertices.length - (1 + minimumDegree.length)];
+            int minDegreeSize = 0;
+            /*
+             * The two for loops below are for creating a list of neighbors 
+             * for our vertex that we selected above by including all neighbors 
+             * not previously deleted
+             * 
+             * for loop 1 is to get the size of neighbors list
+             * 
+             * for loop 2 is to add neighbors that are not already deleted
+             */
+            for(int i : minimumDegree)
+            {
+                boolean containing = false;
+                for(int d = 0; d < deletedPlace; d++)
+                {
+                    containing = (i == deleted[d]);
+                    if(containing)
+                        break;
+                }
+                if(!containing)
+                    minDegreeSize++;
+            }
+            int neighbors[] = new int[minDegreeSize];
+            int test = 0;
+
+            for(int i : minimumDegree)
+            {
+                boolean in = false;
+                if(deletedPlace == 0)
+                    break;
+                for(int d = 0; d < deletedPlace; d++)
+                {
+                    if(i == deleted[d])
+                    {
+                        in = true;
+                        break;
+                    }
+                }
+                if(!in)
+                {
+                    neighbors[test] = i;
+                    test++;
+                }
+            }
+            int remainingTemp[] = new int[remainingVertices.length - (1 + neighbors.length)];
             int independentTemp[] = new int[independentSet.length + 1];
-            int rTIndex = 0;
             System.arraycopy(independentSet, 0, independentTemp, 0, independentSet.length);
             independentTemp[independentTemp.length - 1] = minimumIndex;
+            independentSet = new int[independentTemp.length];
+            System.arraycopy(independentTemp, 0, independentSet, 0, independentTemp.length);
+            int rTIndex = 0;
+            /*
+             * for loop below is to add all vertices found in remainingVertices
+             * to remainingTemp, remainingVertices will then be set equal to remainingTemp
+             */
             for(int i : remainingVertices)
             {
                 boolean contains = false;
-                for(int j : minimumDegree)
+                for(int j : neighbors)
                 {
                     if(i == j)
                     {
@@ -217,17 +273,26 @@ public class GraphToolBox {
                         break;
                     }
                 }
+                if(remainingTemp.length == 0)
+                {
+                    break;
+                }
                 boolean indexContain = (i == minimumIndex);
-                if(!contains && !indexContain)
+                if((!contains) && (!indexContain))
                 {
                     remainingTemp[rTIndex] = i;
-                    rTIndex += 1;
+                    rTIndex++;
+                }
+                else
+                {
+                    deleted[deletedPlace] = i;
+                    deletedPlace++;
                 }
             }
             remainingVertices = new int[remainingTemp.length];
             System.arraycopy(remainingTemp, 0, remainingVertices, 0, remainingTemp.length);
         }
-        System.out.println("Test: " + independentSet.length);
+        System.out.println("IS Length: " + independentSet.length);
         return independentSet;
     }
 
