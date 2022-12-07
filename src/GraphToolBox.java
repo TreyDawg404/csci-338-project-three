@@ -70,25 +70,11 @@ public class GraphToolBox {
      * @author Grossman
      */
     public static int[] inexactVC(Graph inputGraph) {
-        List<Integer> goodVC = new ArrayList<>();
-        List<Integer> touched = new ArrayList<>();
+        ArrayList<Integer> added = new ArrayList<Integer>();
         for (int i = 0; i < inputGraph.getGraph().length; i++){
-            goodVC.add(i);
-            if (!touched.contains(i)){
-                touched.add(i);
-            }
-            for (int nei : inputGraph.getGraph()[i]){
-                if (!touched.contains(nei)){
-                    touched.add(nei);
-                }
-            }
-            int[] converter = new int[goodVC.size()];
-            for (int j = 0; j < goodVC.size(); j++){
-                converter[j] = goodVC.get(j);
-            }
-            if(isVC(inputGraph, converter)){
-                System.out.println("Found solution of length "+converter.length);
-                System.out.println("Unique nodes covered by this solution: "+touched.size());
+            added.add(i);
+            if (isVC(inputGraph, added.stream().mapToInt(Integer::valueOf).toArray())){
+                System.out.println(added.size());
                 return null;
             }
         }
@@ -235,29 +221,35 @@ public class GraphToolBox {
      * @author Grossman
      */
     public static boolean isVC(Graph inputGraph, int[] verts){
-        int vertFlag = 0; // flag used to track pass/fail of function
-        // iterate through each vertex and its children
-        for (int i = 0; i < inputGraph.getGraph().length; i++){
-            vertFlag = 0; // reset flag
-            for (int j = 0; j < inputGraph.getGraph()[i].length; j++){
-                // iterate through each vertex listed in test VC "verts"
-                for (int k : verts){
-                    // switch flag if either the parent or child vertex matches the current test vertex
-                    if (k == inputGraph.getGraph()[i][j] || k == i){vertFlag = 1;}
-                }
-            }
-            // if flag was not changed per parent vertex cycle, return false
-            if (vertFlag == 0){
-                System.out.println("manual VC test: "+false); // test print
-                return false;
+
+        // make an arraylist of edges
+        ArrayList<String> edges = new ArrayList<String>();
+
+        // add every possible edge from the graph to the arraylist
+        for (int parent = 0; parent < inputGraph.getGraph().length; parent++){
+            for (int child : inputGraph.getGraph()[parent]){
+                edges.add("("+parent + "), (" + child + ")");
             }
         }
-        System.out.println("manual VC test: "+true); // test print
-        return true;
+
+        // if an edge contains an endpoint in the given solution, remove it
+        for (int vertex : verts){
+            for (int marker = 0; marker < edges.size(); marker++){
+                if (edges.get(marker).contains("(" + String.valueOf(vertex) + ")")){
+
+                    edges.remove(marker);
+                    // set back counter if deletion occurs to prevent skipping
+                    marker--;
+                }
+            }
+        }
+
+        // if no edges remain, accept the solution
+        if (edges.size() == 0){return true;}
+        else{return false;}
     }
-    
-    
-    
+
+
     /**
      * Tests if a given set of vertices represents an independent set of a given graph
      * @param inputGraph - a graph generated from Graph.java
@@ -266,17 +258,31 @@ public class GraphToolBox {
      * @author Grossman
      */
     public static boolean isIS(Graph inputGraph, int[] verts){
-        for (int i : verts){
-            for (int j : inputGraph.getGraph()[i]){
-                for (int k : verts){
-                    if (j == k){
-                        System.out.println("manual IS test: "+false); // test print
+        
+        // make an arraylist of edges
+        ArrayList<String> edges = new ArrayList<String>();
+
+        // add every possible edge from the graph to the arraylist
+        for (int parent = 0; parent < inputGraph.getGraph().length; parent++){
+            for (int child : inputGraph.getGraph()[parent]){
+                edges.add(parent + ", " + child);
+            }
+        }
+
+        // if an edge is shared by two endpoints in the given solution, reject
+        for (int marker = 0; marker < edges.size(); marker++){
+            int connections = 0;
+            for (int vertex : verts){
+                if (edges.get(marker).contains(String.valueOf(vertex))){
+                    System.out.print(edges.get(marker)+" ");
+                    connections++;
+                    System.out.println(connections);
+                    if (connections > 1){
                         return false;
                     }
                 }
             }
         }
-        System.out.println("manual IS test: "+true); // test print
         return true;
     }
 
