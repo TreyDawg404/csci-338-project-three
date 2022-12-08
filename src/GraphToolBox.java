@@ -177,8 +177,8 @@ public class GraphToolBox {
             temp[i] = new int[length];
             System.arraycopy(innerArray, 0, temp[i], 0, length);
         }
-        int tempSize = temp.length;
-        while(tempSize != 0)
+        boolean allNull = false;
+        while(!allNull)
         {
             int minIndex = 0;
             for(int i = 0; i < temp.length; i++)
@@ -208,14 +208,29 @@ public class GraphToolBox {
                 if(temp[i] != null)
                     temp[i] = null;
             }
-            tempSize -= (temp[minIndex].length + 1);
             temp[minIndex] = null;
             int tempIS[] = new int[independentSet.length + 1];
             System.arraycopy(independentSet, 0, tempIS, 0, independentSet.length);
             tempIS[tempIS.length - 1] = minIndex;
             independentSet = new int[tempIS.length];
             System.arraycopy(tempIS, 0, independentSet, 0, tempIS.length);
+            int sizeset = temp.length;
+            for(int i = 0; i < temp.length; i++)
+            {
+                if(temp[i] == null)
+                {
+                    sizeset--;
+                }
+            }
+            if(sizeset == 0)
+                allNull = true;
         }
+        System.out.print("[");
+        for(int i = 0; i < independentSet.length - 1; i++)
+        {
+            System.out.print(independentSet[i]+",");
+        }
+        System.out.println(independentSet[independentSet.length-1] + "] Size: " + independentSet.length);
         return independentSet;
     }
 
