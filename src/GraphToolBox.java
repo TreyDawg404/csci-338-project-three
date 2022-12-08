@@ -168,7 +168,15 @@ public class GraphToolBox {
     // return (in polynomial time) an array containing the vertex numbers of a IS.
     public static int[] inexactIS(Graph inputGraph) {
         int independentSet[] = new int[0];
-        int temp[][] = inputGraph.getGraph();
+        int placeHolder[][] = inputGraph.getGraph();
+        int temp[][] = new int[placeHolder.length][];
+        for(int i = 0; i < placeHolder.length; i++)
+        {
+            int innerArray[] = placeHolder[i];
+            int length = innerArray.length;
+            temp[i] = new int[length];
+            System.arraycopy(innerArray, 0, temp[i], 0, length);
+        }
         int tempSize = temp.length;
         while(tempSize > 0)
         {
