@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Yaw
@@ -70,14 +71,35 @@ public class GraphToolBox {
      * @author Grossman
      */
     public static int[] inexactVC(Graph inputGraph) {
-        ArrayList<Integer> added = new ArrayList<Integer>();
-        for (int i = 0; i < inputGraph.getGraph().length; i++){
-            added.add(i);
-            if (isVC(inputGraph, added.stream().mapToInt(Integer::valueOf).toArray())){
-                System.out.println(added.size());
-                return null;
+        
+        // make an arraylist of edges
+        ArrayList<String> edges = new ArrayList<String>();
+        ArrayList<Integer> solution = new ArrayList<Integer>();
+        Random random = new Random();
+
+        // add every possible edge from the graph to the arraylist
+        for (int parent = 0; parent < inputGraph.getGraph().length; parent++){
+            for (int child : inputGraph.getGraph()[parent]){
+                edges.add("( "+parent + " ),( " + child+" )");
             }
         }
+
+        
+        while (!edges.isEmpty()){
+            String edge = edges.get(random.nextInt(edges.size()));
+            String work = edge;
+            String test1 = work.split(",")[0].split(" ")[1];
+            String test2 = work.split(",")[1].split(" ")[1];
+            if (!solution.contains(Integer.parseInt(test1))){solution.add(Integer.parseInt(test1));} 
+            if (!solution.contains(Integer.parseInt(test2))){solution.add(Integer.parseInt(test2));}
+            for (int e = 0; e < edges.size(); e++){
+                if (edges.get(e).contains("( "+test1+" )") || edges.get(e).contains("( "+test2+" )")){
+                    edges.remove(e);
+                    e--;
+                }
+            }
+        }
+        System.out.println(solution.size()+" ");
         return null;
     }
     
