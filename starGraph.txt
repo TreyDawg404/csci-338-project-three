@@ -1,0 +1,7 @@
+numVert 5
+vertex numNeighbors neighbor1 neighbor 2 ...
+0 1 1
+1 4 0 2 3 4
+2 1 1
+3 1 1
+4 1 1
