@@ -178,7 +178,7 @@ public class GraphToolBox {
             System.arraycopy(innerArray, 0, temp[i], 0, length);
         }
         int tempSize = temp.length;
-        while(tempSize > 0)
+        while(tempSize != 0)
         {
             int minIndex = 0;
             for(int i = 0; i < temp.length; i++)
