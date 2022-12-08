@@ -59,6 +59,7 @@ public class GraphToolBox {
         }
         System.out.println(Arrays.toString(bestVertexCover));
         System.out.println("Length of best Vertex Cover: " + bestVertexCover.length);
+        System.out.println();
         return bestVertexCover;
     }
 
@@ -84,28 +85,40 @@ public class GraphToolBox {
             }
         }
 
-        
+        // select random edge, add its vertices to the solution and remove all other connected edges
         while (!edges.isEmpty()){
+            // select random edge and extract vertex values
             String edge = edges.get(random.nextInt(edges.size()));
             String work = edge;
-            String test1 = work.split(",")[0].split(" ")[1];
-            String test2 = work.split(",")[1].split(" ")[1];
-            if (!solution.contains(Integer.parseInt(test1))){solution.add(Integer.parseInt(test1));} 
-            if (!solution.contains(Integer.parseInt(test2))){solution.add(Integer.parseInt(test2));}
+            String vert1 = work.split(",")[0].split(" ")[1];
+            String vert2 = work.split(",")[1].split(" ")[1];
+            // add both vertices to tenative solution
+            if (!solution.contains(Integer.parseInt(vert1))){solution.add(Integer.parseInt(vert1));} 
+            if (!solution.contains(Integer.parseInt(vert2))){solution.add(Integer.parseInt(vert2));}
+            // find edges that contain each vertex and remove them
             for (int e = 0; e < edges.size(); e++){
-                if (edges.get(e).contains("( "+test1+" )") || edges.get(e).contains("( "+test2+" )")){
+                if (edges.get(e).contains("( "+vert1+" )") || edges.get(e).contains("( "+vert2+" )")){
                     edges.remove(e);
+                    // set back counter if deletion ocurrs to prevent skipping
                     e--;
                 }
             }
         }
-        System.out.println(solution.size()+" ");
-        return null;
+        int[] unList = solution.stream().mapToInt(Integer::valueOf).toArray();
+        System.out.println(Arrays.toString(unList));
+        System.out.println("Length of approximate best Vertex Cover: " + unList.length);
+        System.out.println();
+        return unList;
     }
     
     
     
-    // return an array containing the vertex numbers of an optimal IS.     
+    /**
+     * Return an array containing the vertex numbers of an optimal IS
+     * @param inputGraph - a graph generated from Graph.java
+     * @return array of Vertex Numbers
+     * @author Cade
+     */    
     public static int[] optimalIS(Graph inputGraph) {
         //variable setup 
         int numVerts = inputGraph.getGraph().length;
@@ -172,7 +185,7 @@ public class GraphToolBox {
                 }
                 if(bestIndependentSet.length < ISArray.length)
                 {
-                    System.out.println(Arrays.toString(bestIndependentSet));
+                    //System.out.println(Arrays.toString(bestIndependentSet));
                     bestIndependentSet = ISArray;
                 }
             }
@@ -180,14 +193,19 @@ public class GraphToolBox {
             //System.out.println();
         }
         System.out.println(Arrays.toString(bestIndependentSet));
-        System.out.println("Best Independent Set Length: " + bestIndependentSet.length);
-
+        System.out.println("Length of best Independent Set: " + bestIndependentSet.length);
+        System.out.println();
         return bestIndependentSet;
     }
     
     
     
-    // return (in polynomial time) an array containing the vertex numbers of a IS.
+    /**
+     * Return (in polynomial time) an array containing the vertex numbers of a IS
+     * @param inputGraph - a graph generated from Graph.java
+     * @return array of Vertex Numbers
+     * @author Bernard
+     */   
     public static int[] inexactIS(Graph inputGraph) {
         int independentSet[] = new int[0];
         int placeHolder[][] = inputGraph.getGraph();
@@ -250,9 +268,15 @@ public class GraphToolBox {
         System.out.print("[");
         for(int i = 0; i < independentSet.length - 1; i++)
         {
-            System.out.print(independentSet[i]+",");
+            if (i == independentSet.length){
+                System.out.print(independentSet[i]+",");
+            }
+            else{
+                System.out.print(independentSet[i]+", ");
+            }
         }
-        System.out.println(independentSet[independentSet.length-1] + "] Size: " + independentSet.length);
+        System.out.println(independentSet[independentSet.length-1] + "]\nLength of approximate best Independent Set: " + independentSet.length);
+        System.out.println();
         return independentSet;
     }
 
@@ -319,9 +343,7 @@ public class GraphToolBox {
             int connections = 0;
             for (int vertex : verts){
                 if (edges.get(marker).contains(String.valueOf(vertex))){
-                    System.out.print(edges.get(marker)+" ");
                     connections++;
-                    System.out.println(connections);
                     if (connections > 1){
                         return false;
                     }
